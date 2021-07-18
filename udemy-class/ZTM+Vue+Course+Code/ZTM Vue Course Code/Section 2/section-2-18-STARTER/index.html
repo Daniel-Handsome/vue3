@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <title>VueJS Course</title>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+<body>
+  <div id="app">
+    <label>
+      <input type="checkbox" v-model="isPurple" /> Purple
+    </label>
+
+  <select v-model="selectColor">
+    <option value="">white</option>
+    <option value="text-black">black</option>
+    <option value="text-orange">orange</option>
+  </select>
+
+    <!-- 多個寫在計算 少個直接寫 -->
+    <div class="circle"  :class="[selectColor, purple_class]" >
+      Hi!
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
