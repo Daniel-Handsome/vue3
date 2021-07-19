@@ -8,10 +8,14 @@
 
 <body>
   <div id="app">
-    <button type="button" class="move">Move to Bottom</button>
-    <div class="card">
-      <h3>Name</h3>
-      <p>Message</p>
+    <button type="button" class="move" @click="move">
+      Move to Bottom
+    </button>
+    
+    <div class="card" v-for="person in people" :key="person.name">
+      <h3>{{ person.name }}</h3>
+      <p>{{ person.message }}</p>
+      <input type="text">
     </div>
   </div>
 
