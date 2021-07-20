@@ -1,0 +1,34 @@
+{
+    "name": "section-5-2-STARTER",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "autoprefixer": "^10.3.1",
+        "css-loader": "^6.2.0",
+        "node-sass": "^6.0.1",
+        "postcss-loader": "^6.1.1",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.1.0",
+        "webpack": "^5.45.1",
+        "webpack-cli": "^4.7.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.14.6",
+        "@babel/preset-env": "^7.14.7",
+        "babel-loader": "^8.2.2",
+        "eslint": "^7.31.0",
+        "mini-css-extract-plugin": "^2.1.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last  2 versions"
+    ]
+}

@@ -1,0 +1,12 @@
+@import 'variables';
+h1{
+    color: red;
+    display: grid;
+    transition: transform 1s;
+    &:hover {
+        color: darken($red, 25%)
+    }
+    span{
+        color: hsl(263, 92%, 46%);
+    }
+}
