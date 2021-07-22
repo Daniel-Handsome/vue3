@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="my-3">
+                <button type="button" class="btn btn-outline-primary">切換大頭貼解析度</button>
+                <!-- 小重點要空格 用中文輸入的標點符號 -->
+                <span>現在圖片解析度：</span>
+                <span>清晰</span>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3" v-for=" item in data">
+                    <div class="card position-relative">
+                        <div class="position-absolute" style="top:20px; right:20px">
+                            <!-- button也能用border -->
+                            <button type="button" class="btn btn-outline-danger rounded-circle">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <img class="card-img-top" :src="item.picture.large"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Monsieur Jérôme Clement</h5>
+                            <p class="card-text">Email：<a :href="`email:${item.email}`">{{item.email}}</a></p>
+                            <p class="card-text">Phone：<a :href="`tel:${item.phone}`">{{item.phone}}</a></p>
+                            <p class="card-text">Cell：<a :href="`tel:${item.cell}`"></a>{{item.cell}}</p>
+                            <p class="card-text">City：{{ item.location.city }}</p>
+                            <p class="card-text">State：{{ item.location.state }}</p>
+                            <p class="card-text">Country：{{ item.location.country }}</p>
+                            <p class="card-text">Postcode：{{ item.location.postcode }}</p>
+                            <p>
+                                Address：<a :href="`https://www.google.com.tw/maps/search/${item.location.city}${item.location.state}`"
+                                  target="_blank">{{ item.location.city }} {{ item.location.state }} {{ item.location.country }} {{
+                                  item.location.postcode }}</a>
+                              </p>
+                            <p class="card-text">description：{{ item.location.timezone.description }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">dob：{{ item.dob.date }}</small>
+                            </p>
+                            <p class="card-text">
+                                <!-- text-muted -->
+                                <small class="text-muted">registered：{{ item.registered.date }}</small>
+                            </p>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7286.949776154742!2d120.68214207481896!3d24.049575835293343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693b17a99d736b%3A0x1c471d70cdc89dc9!2z5Lqe5rSy5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1626436039012!5m2!1szh-TW!2stw"
+                                width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    data: []
+                };
+            },
+            created() {
+                axios.get('https://randomuser.me/api/?results=9')
+                .then(res=>this.data = res.data.results);
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

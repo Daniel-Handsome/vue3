@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        html,
+        body {
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+        }
+
+        *,
+        *:before,
+        *::after {
+            box-sizing: inherit;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app" class="h-100 d-flex align-items-center ">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="exampleInputEmail1" class="form-label">第一個數字</label>
+                            <input type="number" v-model.number="firstNumber" class="form-control"
+                                id="exampleInputEmail1">
+
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleInputPassword1" class="form-label">第二個數字</label>
+                            <input type="number" v-model.number="lastNumber" class="form-control"
+                                id="exampleInputPassword1">
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <!-- 要群組 -->
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-outline-primary w-25"
+                                    :class="{ active: operator === '+'}" @click="operator = '+'">
+                                    +
+                                </button>
+                                <button type="button" @click="operator = '-'" class="btn btn-outline-primary w-25"
+                                    :class="{active: operator === '-'}">-</button>
+                                <button type="button" @click="operator = '*'" class="btn btn-outline-primary w-25"
+                                    :class="{ active: operator === '*'}">*</button>
+                                <button type="button" @click="operator = '÷'" class="btn btn-outline-primary w-25"
+                                    :class="{ active: operator === '÷'}">÷</button>
+                            </div>
+
+                        </div>
+                        <div class="col-12">
+                            <button @click="computeResult"
+                                class="d-block btn btn-outline-primary w-100 mt-3">計算結果</button>
+                        </div>
+                        <h4 class="mt-3">結果 : {{ resultNum }}</h4>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h5>歷史紀錄</h5>
+                    <ul>
+                        <template v-for="(item, index)  in history" :key=index>
+                            <li>
+                                {{ item }}
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    firstNumber: 0,
+                    lastNumber: 0,
+                    operator: 'add',
+                    resultNum: 0,
+                    history: []
+                }
+            },
+            methods: {
+                computeResult() {
+                    switch (this.operator) {
+                        case '+':
+                            this.resultNum = this.firstNumber + this.lastNumber;
+                            break;
+                        case '-':
+                            this.resultNum = this.firstNumber - this.lastNumber;
+                            break;
+                        case '*':
+                            this.resultNum = this.firstNumber * this.lastNumber;
+                            break;
+                        case '÷':
+                            this.resultNum = this.firstNumber / this.lastNumber;
+                            break;
+                        default:
+                            break;
+                    };
+                    this.reset()
+                },
+                reset() {
+                    this.history.push(`${this.firstNumber}${this.operator}${this.lastNumber} = ${this.resultNum}`);
+                    localStorage.setItem('history', JSON.stringify(this.history));
+                    let all = localStorage.getItem('history');
+                    this.history = JSON.parse(all);
+                    this.firstNumber = 0;
+                    this.lastNumber = 0;
+                    this.operator = 'add';
+                    this.resultNum = 0;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+
+</html>
