@@ -6,7 +6,14 @@
 <script>
 export default {
     name:'User',
-    props:['age'],
+    props:{
+        age:{
+            type:Number,
+            validator(value){
+               return  value < 130
+            }
+        }
+    },
     emits:['age-change'],
     methods:{
         agechage(){

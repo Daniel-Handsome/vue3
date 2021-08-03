@@ -11,7 +11,7 @@ export default {
   name:'App',
   data(){
     return{
-      age:20
+      age:40
     }
   },
   components:{
@@ -21,7 +21,8 @@ export default {
   methods:{
     udateAge(num){
       this.age += num 
-    }
+    },
+   
   }
 }
 </script>
