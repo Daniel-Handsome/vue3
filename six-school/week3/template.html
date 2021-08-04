@@ -34,8 +34,17 @@
             <div class="d-flex">
               <div class="form-check">
                 <div>
-                  <input :id="item.id" type="checkbox" class="form-check-input" @click="item.finish = !item.finish">
-                  <label :for="item.id">{{ item.text }}</label>
+                  <input v-if="item.id === cacheId" type="text" 
+                  v-model="cacheText"
+                  class="form-control"
+                  @keyup.enter="doneEdit(item)">
+                  <template v-else>
+                    <input :id="item.id" type="checkbox" class="form-check-input" @click="item.finish = !item.finish"
+                      :checked="item.finish">
+                    <label :for="item.id" @dblclick="editTodo(item)" :class={completed:item.finish}>
+                      {{ item.text}}
+                    </label>
+                  </template>
                 </div>
               </div>
               <button type="button" class="btn-close ms-auto remove" @click="removeTodo(item)">
@@ -69,7 +78,7 @@
           <a href="#" class="me-3" @click.stop.prevent="checkStatus = 'all'">全部</a>
           <a href="#" class="me-3" @click.stop.prevent="checkStatus = 'nofinish'">未完成</a>
           <a href="#" class="me-3" @click.stop.prevent="checkStatus = 'finish'">已完成</a>
-          <a href="#">清除所有任務</a>
+          <a href="#" @click.stop.prevent="removeAll()">清除所有任務</a>
         </div>
       </div>
     </div>
@@ -84,17 +93,17 @@
         return {
           newTodo: '',
           todoList: [],
-          checkStatus: 'all'
+          checkStatus: 'all',
+          cacheText: '',
+          cacheId: ''
         }
       },
       computed: {
         filterList() {
           switch (this.checkStatus) {
             case 'nofinish':
-              console.log(2);
               return this.todoList.filter(obj => !obj.finish);
             case 'finish':
-              console.log(1);
               return this.todoList.filter(obj => obj.finsh);
             default:
               return this.todoList;
@@ -114,6 +123,22 @@
         removeTodo(item) {
           const index = this.todoList.findIndex(obj => obj.id === item.id);
           this.todoList.splice(index, 1);
+        },
+        editTodo(item) {
+          this.cacheText = item.text
+          this.cacheId = item.id
+        },
+        doneEdit(item){
+          const index = this.todoList.findIndex(obj => obj.id === item.id);
+          this.todoList[index].text = this.cacheText;
+          this.clearCache();
+        },
+        removeAll() {
+          if (window.confirm('確定刪除全部嗎?')) this.todoList = [];
+        },
+        clearCache(){
+          this.cacheId = ''
+          this.cacheText = ''
         }
       },
     }).mount('#app');
