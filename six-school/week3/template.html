@@ -98,6 +98,7 @@
           cacheId: ''
         }
       },
+      // 重點用 computed來跑for
       computed: {
         filterList() {
           switch (this.checkStatus) {
@@ -129,6 +130,7 @@
           this.cacheId = item.id
         },
         doneEdit(item){
+          if(!cacheText) return
           const index = this.todoList.findIndex(obj => obj.id === item.id);
           this.todoList[index].text = this.cacheText;
           this.clearCache();
